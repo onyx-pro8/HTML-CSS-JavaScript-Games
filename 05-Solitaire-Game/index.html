@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Talha - Solitaire Game</title>
 
     <!-- 👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻👇🏻-->
@@ -15,7 +18,10 @@
 
     <link rel="icon" href="https://i.ibb.co/M6KTWnf/pic.jpg" />
     <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="wrapper">
@@ -45,9 +51,25 @@
           <h1>Solitaire</h1>
           <span class="level-badge" id="levelBadge">Easy</span>
           <div class="header-actions">
-            <button type="button" id="hintBtn" class="btn btn-ghost" title="Hint">Hint</button>
-            <button type="button" id="undoBtn" class="btn btn-ghost" title="Undo">Undo <span id="undoCount"></span></button>
-            <button type="button" id="changeLevelBtn" class="btn btn-ghost">Level</button>
+            <button
+              type="button"
+              id="hintBtn"
+              class="btn btn-ghost"
+              title="Hint"
+            >
+              Hint
+            </button>
+            <button
+              type="button"
+              id="undoBtn"
+              class="btn btn-ghost"
+              title="Undo"
+            >
+              Undo <span id="undoCount"></span>
+            </button>
+            <button type="button" id="changeLevelBtn" class="btn btn-ghost">
+              Level
+            </button>
             <button type="button" id="newGameBtn" class="btn">New Game</button>
           </div>
         </header>
@@ -58,7 +80,11 @@
               <div id="stock" class="pile stock" aria-label="Stock"></div>
               <div id="waste" class="pile waste" aria-label="Waste"></div>
             </div>
-            <div id="foundations" class="foundations" aria-label="Foundations"></div>
+            <div
+              id="foundations"
+              class="foundations"
+              aria-label="Foundations"
+            ></div>
           </div>
           <div id="tableau" class="tableau" aria-label="Tableau"></div>
         </main>
@@ -69,8 +95,16 @@
             <h2>You win!</h2>
             <p>Congratulations, you completed Solitaire.</p>
             <div class="win-actions">
-              <button type="button" id="playAgainBtn" class="btn btn-large">Play Again</button>
-              <button type="button" id="changeLevelFromWinBtn" class="btn btn-ghost">Change Level</button>
+              <button type="button" id="playAgainBtn" class="btn btn-large">
+                Play Again
+              </button>
+              <button
+                type="button"
+                id="changeLevelFromWinBtn"
+                class="btn btn-ghost"
+              >
+                Change Level
+              </button>
             </div>
           </div>
         </div>

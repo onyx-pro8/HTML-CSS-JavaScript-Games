@@ -82,7 +82,11 @@
     const div = document.createElement("div");
     div.className = "card-wrapper";
     const inner = document.createElement("div");
-    inner.className = "card " + (card.faceUp ? "face-up" : "face-down") + " " + (isRed(card.suit) ? "red" : "black");
+    inner.className =
+      "card " +
+      (card.faceUp ? "face-up" : "face-down") +
+      " " +
+      (isRed(card.suit) ? "red" : "black");
     inner.dataset.suit = card.suit;
     inner.dataset.rank = card.rank;
     if (opts.draggable) {
@@ -91,7 +95,9 @@
       inner.addEventListener("dragend", handleDragEnd);
     }
     inner.addEventListener("click", (e) => handleCardClick(e, card, opts.from));
-    const rankStr = card.faceUp ? (RANK_DISPLAY[card.rank] || String(card.rank)) : "";
+    const rankStr = card.faceUp
+      ? RANK_DISPLAY[card.rank] || String(card.rank)
+      : "";
     const suitStr = card.faceUp ? SUITS[card.suit] : "";
     const cornerTL = document.createElement("span");
     cornerTL.className = "card-corner card-corner-tl";
@@ -122,7 +128,12 @@
       const pile = state.foundations[i];
       if (pile.length > 0) {
         const top = pile[pile.length - 1];
-        slot.appendChild(cardEl(top, { from: { type: "foundation", index: i }, draggable: true }));
+        slot.appendChild(
+          cardEl(top, {
+            from: { type: "foundation", index: i },
+            draggable: true,
+          }),
+        );
       }
       foundationsEl.appendChild(slot);
     }
@@ -187,9 +198,12 @@
     } else {
       const count = Math.min(state.drawCount, state.stock.length);
       const drawn = state.stock.splice(-count);
-      drawn.forEach(c => (c.faceUp = true));
+      drawn.forEach((c) => (c.faceUp = true));
       state.waste.push(...drawn);
-      state.wasteRevealIndex = Math.max(0, state.waste.length - state.drawCount);
+      state.wasteRevealIndex = Math.max(
+        0,
+        state.waste.length - state.drawCount,
+      );
       pushUndo({ type: "draw", cards: drawn });
     }
     render();
@@ -197,7 +211,8 @@
 
   function pushUndo(entry) {
     state.undoStack.push(entry);
-    if (state.undosLeft !== 999) state.undosLeft = Math.max(0, state.undosLeft - 1);
+    if (state.undosLeft !== 999)
+      state.undosLeft = Math.max(0, state.undosLeft - 1);
   }
 
   function undo() {
@@ -208,14 +223,20 @@
     if (entry.type === "draw") {
       const cards = entry.cards;
       state.waste.splice(state.waste.length - cards.length, cards.length);
-      cards.reverse().forEach(c => (c.faceUp = false));
+      cards.reverse().forEach((c) => (c.faceUp = false));
       state.stock.push(...cards);
-      state.wasteRevealIndex = Math.max(0, state.waste.length - state.drawCount);
+      state.wasteRevealIndex = Math.max(
+        0,
+        state.waste.length - state.drawCount,
+      );
     } else if (entry.type === "recycle") {
       const cards = state.stock.splice(0);
-      cards.forEach(c => (c.faceUp = true));
+      cards.forEach((c) => (c.faceUp = true));
       state.waste = cards.reverse();
-      state.wasteRevealIndex = Math.max(0, state.waste.length - state.drawCount);
+      state.wasteRevealIndex = Math.max(
+        0,
+        state.waste.length - state.drawCount,
+      );
     } else if (entry.type === "move") {
       const { from, to, cards: cardCount } = entry;
       let moved = [];
@@ -231,7 +252,8 @@
       } else {
         state.tableau[from.column].splice(from.index, 0, ...moved);
         const col = state.tableau[from.column];
-        if (col.length > 0 && !col[col.length - 1].faceUp) col[col.length - 1].faceUp = true;
+        if (col.length > 0 && !col[col.length - 1].faceUp)
+          col[col.length - 1].faceUp = true;
       }
     }
     render();
@@ -249,7 +271,11 @@
     const col = state.tableau[colIndex];
     if (col.length === 0) return card.rank === 13;
     const top = col[col.length - 1];
-    return top.faceUp && isRed(card.suit) !== isRed(top.suit) && top.rank === card.rank + 1;
+    return (
+      top.faceUp &&
+      isRed(card.suit) !== isRed(top.suit) &&
+      top.rank === card.rank + 1
+    );
   }
 
   function getTopCard(from) {
@@ -261,14 +287,17 @@
       const col = state.tableau[from.column];
       return col.length > 0 ? col[col.length - 1] : null;
     }
-    if (from.type === "waste") return state.waste.length > 0 ? state.waste[state.waste.length - 1] : null;
+    if (from.type === "waste")
+      return state.waste.length > 0
+        ? state.waste[state.waste.length - 1]
+        : null;
     return null;
   }
 
   function getCardsToMove(from, card) {
     if (from.type === "foundation" || from.type === "waste") return [card];
     const col = state.tableau[from.column];
-    const idx = col.findIndex(c => c === card);
+    const idx = col.findIndex((c) => c === card);
     if (idx === -1) return [];
     return col.slice(idx);
   }
@@ -283,11 +312,19 @@
       const col = state.tableau[to.column];
       for (let i = 0; i < cards.length; i++) {
         const card = cards[i];
-        const canPlace = col.length === 0 ? card.rank === 13 : (col[col.length - 1].faceUp && isRed(card.suit) !== isRed(col[col.length - 1].suit) && col[col.length - 1].rank === card.rank + 1);
+        const canPlace =
+          col.length === 0
+            ? card.rank === 13
+            : col[col.length - 1].faceUp &&
+              isRed(card.suit) !== isRed(col[col.length - 1].suit) &&
+              col[col.length - 1].rank === card.rank + 1;
         if (!canPlace) return false;
         removeCardsFrom(i === 0 ? from : null, [card]);
         if (i === 0 && from.type === "tableau") {
-          state.tableau[from.column].splice(state.tableau[from.column].indexOf(card), 1);
+          state.tableau[from.column].splice(
+            state.tableau[from.column].indexOf(card),
+            1,
+          );
         }
         col.push(card);
       }
@@ -295,10 +332,16 @@
         const colFrom = state.tableau[from.column];
         const startIdx = colFrom.indexOf(cards[0]);
         colFrom.splice(startIdx, cards.length);
-        if (colFrom.length > 0 && !colFrom[colFrom.length - 1].faceUp) colFrom[colFrom.length - 1].faceUp = true;
+        if (colFrom.length > 0 && !colFrom[colFrom.length - 1].faceUp)
+          colFrom[colFrom.length - 1].faceUp = true;
       }
     }
-    pushUndo({ type: "move", from: JSON.parse(JSON.stringify(from)), to: JSON.parse(JSON.stringify(to)), cards: cards.length });
+    pushUndo({
+      type: "move",
+      from: JSON.parse(JSON.stringify(from)),
+      to: JSON.parse(JSON.stringify(to)),
+      cards: cards.length,
+    });
     return true;
   }
 
@@ -314,20 +357,30 @@
     if (to.type === "foundation") {
       if (cards.length > 1) return false;
       if (!canPlaceOnFoundation(card, to.index)) return false;
-      if (from.type === "tableau") state.tableau[from.column].splice(state.tableau[from.column].indexOf(card), 1);
+      if (from.type === "tableau")
+        state.tableau[from.column].splice(
+          state.tableau[from.column].indexOf(card),
+          1,
+        );
       else if (from.type === "waste") state.waste.pop();
       else if (from.type === "foundation") state.foundations[from.index].pop();
       state.foundations[to.index].push(card);
     } else {
       const col = state.tableau[to.column];
-      const valid = col.length === 0 ? card.rank === 13 : (col[col.length - 1].faceUp && isRed(card.suit) !== isRed(col[col.length - 1].suit) && col[col.length - 1].rank === card.rank + 1);
+      const valid =
+        col.length === 0
+          ? card.rank === 13
+          : col[col.length - 1].faceUp &&
+            isRed(card.suit) !== isRed(col[col.length - 1].suit) &&
+            col[col.length - 1].rank === card.rank + 1;
       if (!valid) return false;
       if (from.type === "tableau") {
         const colFrom = state.tableau[from.column];
         const idx = colFrom.indexOf(card);
         const moved = colFrom.splice(idx, colFrom.length - idx);
-        moved.forEach(c => col.push(c));
-        if (colFrom.length > 0 && !colFrom[colFrom.length - 1].faceUp) colFrom[colFrom.length - 1].faceUp = true;
+        moved.forEach((c) => col.push(c));
+        if (colFrom.length > 0 && !colFrom[colFrom.length - 1].faceUp)
+          colFrom[colFrom.length - 1].faceUp = true;
       } else if (from.type === "waste") {
         state.waste.pop();
         col.push(card);
@@ -336,7 +389,12 @@
         col.push(card);
       }
     }
-    pushUndo({ type: "move", from: JSON.parse(JSON.stringify(from)), to: JSON.parse(JSON.stringify(to)), cards: cards.length });
+    pushUndo({
+      type: "move",
+      from: JSON.parse(JSON.stringify(from)),
+      to: JSON.parse(JSON.stringify(to)),
+      cards: cards.length,
+    });
     return true;
   }
 
@@ -364,7 +422,9 @@
     state.selectedCard = card;
     state.selectedFrom = from;
     render();
-    const el = document.querySelector(`.card[data-suit="${card.suit}"][data-rank="${card.rank}"]`);
+    const el = document.querySelector(
+      `.card[data-suit="${card.suit}"][data-rank="${card.rank}"]`,
+    );
     if (el) el.classList.add("selected");
   }
 
@@ -385,16 +445,23 @@
   }
 
   function findHint() {
-    const wasteTop = state.waste.length > 0 ? state.waste[state.waste.length - 1] : null;
+    const wasteTop =
+      state.waste.length > 0 ? state.waste[state.waste.length - 1] : null;
     for (let f = 0; f < 4; f++) {
-      if (wasteTop && canPlaceOnFoundation(wasteTop, f)) return { from: { type: "waste" }, card: wasteTop };
+      if (wasteTop && canPlaceOnFoundation(wasteTop, f))
+        return { from: { type: "waste" }, card: wasteTop };
       const pile = state.foundations[f];
       if (pile.length > 0) {
         const card = pile[pile.length - 1];
         for (let c = 0; c < 7; c++) {
           const col = state.tableau[c];
           if (col.length === 0 && card.rank === 13) continue;
-          if (col.length > 0 && col[col.length - 1].faceUp && isRed(card.suit) !== isRed(col[col.length - 1].suit) && col[col.length - 1].rank === card.rank + 1)
+          if (
+            col.length > 0 &&
+            col[col.length - 1].faceUp &&
+            isRed(card.suit) !== isRed(col[col.length - 1].suit) &&
+            col[col.length - 1].rank === card.rank + 1
+          )
             return { from: { type: "foundation", index: f }, card };
         }
       }
@@ -405,17 +472,20 @@
         if (!col[i].faceUp) break;
         const card = col[i];
         for (let f = 0; f < 4; f++) {
-          if (canPlaceOnFoundation(card, f)) return { from: { type: "tableau", column: c, index: i }, card };
+          if (canPlaceOnFoundation(card, f))
+            return { from: { type: "tableau", column: c, index: i }, card };
         }
         for (let c2 = 0; c2 < 7; c2++) {
           if (c2 === c) continue;
-          if (canPlaceOnTableau(card, c2)) return { from: { type: "tableau", column: c, index: i }, card };
+          if (canPlaceOnTableau(card, c2))
+            return { from: { type: "tableau", column: c, index: i }, card };
         }
       }
     }
     if (wasteTop) {
       for (let c = 0; c < 7; c++) {
-        if (canPlaceOnTableau(wasteTop, c)) return { from: { type: "waste" }, card: wasteTop };
+        if (canPlaceOnTableau(wasteTop, c))
+          return { from: { type: "waste" }, card: wasteTop };
       }
     }
     return null;
@@ -427,7 +497,9 @@
     state.selectedCard = hint.card;
     state.selectedFrom = hint.from;
     render();
-    const el = document.querySelector(`.card[data-suit="${hint.card.suit}"][data-rank="${hint.card.rank}"]`);
+    const el = document.querySelector(
+      `.card[data-suit="${hint.card.suit}"][data-rank="${hint.card.rank}"]`,
+    );
     if (el) {
       el.classList.add("selected", "hint");
       setTimeout(() => el.classList.remove("hint"), 1200);
@@ -444,19 +516,41 @@
     let card = null;
     let from = null;
     for (const col of state.tableau) {
-      const idx = col.findIndex(c => c.suit === suit && c.rank === rank);
+      const idx = col.findIndex((c) => c.suit === suit && c.rank === rank);
       if (idx !== -1) {
         card = col[idx];
-        from = { type: "tableau", column: state.tableau.indexOf(col), index: idx };
+        from = {
+          type: "tableau",
+          column: state.tableau.indexOf(col),
+          index: idx,
+        };
         break;
       }
     }
-    if (!card && state.waste.length > 0 && state.waste[state.waste.length - 1].suit === suit && state.waste[state.waste.length - 1].rank === rank) {
+    if (
+      !card &&
+      state.waste.length > 0 &&
+      state.waste[state.waste.length - 1].suit === suit &&
+      state.waste[state.waste.length - 1].rank === rank
+    ) {
       card = state.waste[state.waste.length - 1];
       from = { type: "waste" };
     }
-    if (!card && state.foundations.some((p, i) => p.length > 0 && p[p.length - 1].suit === suit && p[p.length - 1].rank === rank)) {
-      const fi = state.foundations.findIndex(p => p.length > 0 && p[p.length - 1].suit === suit && p[p.length - 1].rank === rank);
+    if (
+      !card &&
+      state.foundations.some(
+        (p, i) =>
+          p.length > 0 &&
+          p[p.length - 1].suit === suit &&
+          p[p.length - 1].rank === rank,
+      )
+    ) {
+      const fi = state.foundations.findIndex(
+        (p) =>
+          p.length > 0 &&
+          p[p.length - 1].suit === suit &&
+          p[p.length - 1].rank === rank,
+      );
       card = state.foundations[fi][state.foundations[fi].length - 1];
       from = { type: "foundation", index: fi };
     }
@@ -483,7 +577,9 @@
       const colEl = e.target.closest(".tableau-column");
       if (!colEl) return;
       const colIdx = parseInt(colEl.dataset.column, 10);
-      if (doMove(dragSrc.from, dragSrc.card, { type: "tableau", column: colIdx })) {
+      if (
+        doMove(dragSrc.from, dragSrc.card, { type: "tableau", column: colIdx })
+      ) {
         render();
         updateUndoButton();
         checkWin();
@@ -500,7 +596,9 @@
       const slot = e.target.closest(".foundation-slot");
       if (!slot) return;
       const idx = parseInt(slot.dataset.index, 10);
-      if (doMove(dragSrc.from, dragSrc.card, { type: "foundation", index: idx })) {
+      if (
+        doMove(dragSrc.from, dragSrc.card, { type: "foundation", index: idx })
+      ) {
         render();
         updateUndoButton();
         checkWin();
@@ -525,7 +623,9 @@
       return;
     }
     btn.style.display = "";
-    btn.disabled = state.undoStack.length === 0 || (state.undosLeft !== 999 && state.undosLeft === 0);
+    btn.disabled =
+      state.undoStack.length === 0 ||
+      (state.undosLeft !== 999 && state.undosLeft === 0);
     countEl.textContent = cfg.undos === -1 ? "" : `(${state.undosLeft})`;
   }
 
@@ -533,7 +633,8 @@
     state.level = level;
     $("#levelScreen").classList.add("hidden");
     $("#gameScreen").classList.remove("hidden");
-    $("#levelBadge").textContent = level.charAt(0).toUpperCase() + level.slice(1);
+    $("#levelBadge").textContent =
+      level.charAt(0).toUpperCase() + level.slice(1);
     const cfg = DIFFICULTY[level];
     $("#hintBtn").style.display = cfg.hints ? "" : "none";
     deal();

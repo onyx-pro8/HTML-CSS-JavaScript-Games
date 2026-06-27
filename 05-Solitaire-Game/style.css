@@ -3,7 +3,7 @@
   --card-width: 72px;
   --card-height: 100px;
   --card-radius: 6px;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   --card-offset: 22px;
   --green-felt: #0d5c2e;
   --green-felt-dark: #094020;
@@ -68,23 +68,27 @@ body {
 
 .level-btn {
   padding: 16px 20px;
-  border: 2px solid rgba(255,255,255,0.35);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-radius: 12px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: inherit;
   font-family: inherit;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.1s;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.level-btn:hover, .level-btn:focus-visible {
-  background: rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.5);
+.level-btn:hover,
+.level-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .level-btn:active {
@@ -137,7 +141,7 @@ body {
 .level-badge {
   padding: 4px 10px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   font-size: 0.8rem;
   font-weight: 600;
 }
@@ -153,17 +157,20 @@ body {
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.25);
   color: inherit;
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
-.btn:hover, .btn:focus-visible {
-  background: rgba(255,255,255,0.35);
+.btn:hover,
+.btn:focus-visible {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .btn:active {
@@ -177,11 +184,11 @@ body {
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .btn-ghost:hover:not(:disabled) {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .btn-large {
@@ -217,19 +224,19 @@ body {
   height: var(--card-height);
   min-height: var(--card-height);
   border-radius: var(--card-radius);
-  border: 2px dashed rgba(255,255,255,0.25);
-  background: rgba(0,0,0,0.2);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.2);
   position: relative;
   cursor: pointer;
   transition: background 0.15s;
 }
 
 .pile:hover {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .pile.stock {
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .pile.waste {
@@ -250,8 +257,8 @@ body {
   height: var(--card-height);
   min-height: var(--card-height);
   border-radius: var(--card-radius);
-  border: 2px dashed rgba(255,255,255,0.25);
-  background: rgba(0,0,0,0.2);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.2);
   position: relative;
   flex-shrink: 0;
 }
@@ -305,14 +312,16 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
-  transition: transform 0.1s, box-shadow 0.15s;
+  transition:
+    transform 0.1s,
+    box-shadow 0.15s;
   font-weight: 700;
   font-size: 0.95rem;
 }
 
 .card.face-down {
   background: linear-gradient(145deg, #2a5a9e 0%, #1e3a6e 100%);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: transparent;
 }
 
@@ -326,7 +335,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(255,255,255,0.2);
+  color: rgba(255, 255, 255, 0.2);
   font-size: 1.5rem;
 }
 
@@ -375,7 +384,7 @@ body {
 .card.dragging {
   opacity: 0.9;
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   z-index: 100;
 }
 
@@ -388,8 +397,13 @@ body {
 }
 
 @keyframes hint-pulse {
-  0%, 100% { box-shadow: var(--card-shadow); }
-  50% { box-shadow: 0 0 0 3px var(--gold); }
+  0%,
+  100% {
+    box-shadow: var(--card-shadow);
+  }
+  50% {
+    box-shadow: 0 0 0 3px var(--gold);
+  }
 }
 
 /* Waste pile cards (stacked) */
@@ -398,15 +412,24 @@ body {
   margin-bottom: 0;
 }
 
-.waste .card-wrapper:nth-last-child(1) { left: 0; z-index: 1; }
-.waste .card-wrapper:nth-last-child(2) { left: 12px; z-index: 2; }
-.waste .card-wrapper:nth-last-child(3) { left: 24px; z-index: 3; }
+.waste .card-wrapper:nth-last-child(1) {
+  left: 0;
+  z-index: 1;
+}
+.waste .card-wrapper:nth-last-child(2) {
+  left: 12px;
+  z-index: 2;
+}
+.waste .card-wrapper:nth-last-child(3) {
+  left: 24px;
+  z-index: 3;
+}
 
 /* ===== Win overlay ===== */
 .win-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -420,7 +443,7 @@ body {
 
 .win-box {
   background: linear-gradient(145deg, #1a472a 0%, #0d5c2e 100%);
-  border: 2px solid rgba(255,255,255,0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   padding: 32px;
   text-align: center;
@@ -480,7 +503,8 @@ body {
     gap: 6px;
   }
 
-  .pile, .foundation-slot {
+  .pile,
+  .foundation-slot {
     width: var(--card-width);
     min-width: var(--card-width);
     height: var(--card-height);
@@ -491,8 +515,12 @@ body {
     min-width: calc(var(--card-width) + 24px);
   }
 
-  .waste .card-wrapper:nth-last-child(2) { left: 8px; }
-  .waste .card-wrapper:nth-last-child(3) { left: 16px; }
+  .waste .card-wrapper:nth-last-child(2) {
+    left: 8px;
+  }
+  .waste .card-wrapper:nth-last-child(3) {
+    left: 16px;
+  }
 
   .tableau {
     gap: 4px;
@@ -520,6 +548,10 @@ body {
     min-width: calc(var(--card-width) + 16px);
   }
 
-  .waste .card-wrapper:nth-last-child(2) { left: 6px; }
-  .waste .card-wrapper:nth-last-child(3) { left: 12px; }
+  .waste .card-wrapper:nth-last-child(2) {
+    left: 6px;
+  }
+  .waste .card-wrapper:nth-last-child(3) {
+    left: 12px;
+  }
 }
