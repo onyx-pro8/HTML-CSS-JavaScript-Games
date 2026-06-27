@@ -22,7 +22,9 @@ body {
   max-width: min(480px, 95vw);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 4px rgba(255, 255, 255, 0.06);
 }
 
 #gameCanvas {
@@ -31,7 +33,13 @@ body {
   aspect-ratio: 480 / 600;
   max-height: 70vh;
   height: auto;
-  background: linear-gradient(180deg, #87ceeb 0%, #e0f6ff 40%, #98d8aa 70%, #7bc67e 100%);
+  background: linear-gradient(
+    180deg,
+    #87ceeb 0%,
+    #e0f6ff 40%,
+    #98d8aa 70%,
+    #7bc67e 100%
+  );
   cursor: pointer;
   touch-action: none;
 }
@@ -91,7 +99,9 @@ body {
   font-size: 2.5rem;
   color: #fff;
   margin: 0 0 16px;
-  text-shadow: 0 4px 0 #6bcb77, 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 4px 0 #6bcb77,
+    0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .overlay-start p {
@@ -119,18 +129,26 @@ body {
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 6px 0 #2d8a3e, 0 8px 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow:
+    0 6px 0 #2d8a3e,
+    0 8px 20px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
 }
 
 .btn-start:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 0 #2d8a3e, 0 10px 24px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 8px 0 #2d8a3e,
+    0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
 .btn-start:active {
   transform: translateY(2px);
-  box-shadow: 0 4px 0 #2d8a3e, 0 6px 16px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 4px 0 #2d8a3e,
+    0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .overlay-gameover h2 {
@@ -179,7 +197,9 @@ body {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  transition: transform 0.1s, background 0.1s;
+  transition:
+    transform 0.1s,
+    background 0.1s;
 }
 
 .mobile-controls .ctrl-btn:active,
