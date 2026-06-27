@@ -174,13 +174,51 @@
     } else if (type === "K") {
       dirs.forEach(([dr, dc]) => add(r + dr, c + dc));
       if (!forAttackOnly) {
-        if (color === "w" && !kingMoved.w && !rookMoved.w[0] && !getPiece(7, 1) && !getPiece(7, 2) && !getPiece(7, 3) && !isSquareAttacked(7, 4, "b") && !isSquareAttacked(7, 3, "b") && !isSquareAttacked(7, 2, "b"))
+        if (
+          color === "w" &&
+          !kingMoved.w &&
+          !rookMoved.w[0] &&
+          !getPiece(7, 1) &&
+          !getPiece(7, 2) &&
+          !getPiece(7, 3) &&
+          !isSquareAttacked(7, 4, "b") &&
+          !isSquareAttacked(7, 3, "b") &&
+          !isSquareAttacked(7, 2, "b")
+        )
           moves.push([7, 2]);
-        if (color === "w" && !kingMoved.w && !rookMoved.w[1] && !getPiece(7, 5) && !getPiece(7, 6) && !isSquareAttacked(7, 4, "b") && !isSquareAttacked(7, 5, "b") && !isSquareAttacked(7, 6, "b"))
+        if (
+          color === "w" &&
+          !kingMoved.w &&
+          !rookMoved.w[1] &&
+          !getPiece(7, 5) &&
+          !getPiece(7, 6) &&
+          !isSquareAttacked(7, 4, "b") &&
+          !isSquareAttacked(7, 5, "b") &&
+          !isSquareAttacked(7, 6, "b")
+        )
           moves.push([7, 6]);
-        if (color === "b" && !kingMoved.b && !rookMoved.b[0] && !getPiece(0, 1) && !getPiece(0, 2) && !getPiece(0, 3) && !isSquareAttacked(0, 4, "w") && !isSquareAttacked(0, 3, "w") && !isSquareAttacked(0, 2, "w"))
+        if (
+          color === "b" &&
+          !kingMoved.b &&
+          !rookMoved.b[0] &&
+          !getPiece(0, 1) &&
+          !getPiece(0, 2) &&
+          !getPiece(0, 3) &&
+          !isSquareAttacked(0, 4, "w") &&
+          !isSquareAttacked(0, 3, "w") &&
+          !isSquareAttacked(0, 2, "w")
+        )
           moves.push([0, 2]);
-        if (color === "b" && !kingMoved.b && !rookMoved.b[1] && !getPiece(0, 5) && !getPiece(0, 6) && !isSquareAttacked(0, 4, "w") && !isSquareAttacked(0, 5, "w") && !isSquareAttacked(0, 6, "w"))
+        if (
+          color === "b" &&
+          !kingMoved.b &&
+          !rookMoved.b[1] &&
+          !getPiece(0, 5) &&
+          !getPiece(0, 6) &&
+          !isSquareAttacked(0, 4, "w") &&
+          !isSquareAttacked(0, 5, "w") &&
+          !isSquareAttacked(0, 6, "w")
+        )
           moves.push([0, 6]);
       }
     } else if (type === "P") {
@@ -189,14 +227,26 @@
       if (!forAttackOnly) {
         if (!getPiece(r + forward, c)) {
           moves.push([r + forward, c]);
-          if (r === startRow && !getPiece(r + 2 * forward, c)) moves.push([r + 2 * forward, c]);
+          if (r === startRow && !getPiece(r + 2 * forward, c))
+            moves.push([r + 2 * forward, c]);
         }
       }
-      [[r + forward, c - 1], [r + forward, c + 1]].forEach(([r1, c1]) => {
+      [
+        [r + forward, c - 1],
+        [r + forward, c + 1],
+      ].forEach(([r1, c1]) => {
         if (!inBounds(r1, c1)) return;
         const target = getPiece(r1, c1);
         if (target && target.color !== color) moves.push([r1, c1]);
-        if (!forAttackOnly && lastMove && lastMove.piece === "P" && lastMove.fromC === lastMove.toC && lastMove.toR === r && lastMove.fromR === r + 2 * forward && lastMove.toC === c1)
+        if (
+          !forAttackOnly &&
+          lastMove &&
+          lastMove.piece === "P" &&
+          lastMove.fromC === lastMove.toC &&
+          lastMove.toR === r &&
+          lastMove.fromR === r + 2 * forward &&
+          lastMove.toC === c1
+        )
           moves.push([r1, c1]);
       });
     }
@@ -219,7 +269,15 @@
       board[r][c] = null;
 
       let epRestore = null;
-      if (piece.type === "P" && lastMove && lastMove.piece === "P" && lastMove.fromC === lastMove.toC && lastMove.toR === r && lastMove.fromR === r + (turn === "w" ? -2 : 2) && lastMove.toC === toC) {
+      if (
+        piece.type === "P" &&
+        lastMove &&
+        lastMove.piece === "P" &&
+        lastMove.fromC === lastMove.toC &&
+        lastMove.toR === r &&
+        lastMove.fromR === r + (turn === "w" ? -2 : 2) &&
+        lastMove.toC === toC
+      ) {
         epRestore = [lastMove.toR, lastMove.toC];
         board[lastMove.toR][lastMove.toC] = null;
       }
@@ -228,7 +286,11 @@
       if (piece.type === "K" && Math.abs(toC - c) === 2) {
         const rookCol = toC === 2 ? 0 : 7;
         const newRookCol = toC === 2 ? 3 : 5;
-        castlingRook = { from: [r, rookCol], to: [r, newRookCol], piece: board[r][rookCol] };
+        castlingRook = {
+          from: [r, rookCol],
+          to: [r, newRookCol],
+          piece: board[r][rookCol],
+        };
         board[r][newRookCol] = board[r][rookCol];
         board[r][rookCol] = null;
       }
@@ -239,7 +301,11 @@
 
       board[r][c] = fromPiece;
       board[toR][toC] = captured;
-      if (epRestore) board[epRestore[0]][epRestore[1]] = { type: "P", color: turn === "w" ? "b" : "w" };
+      if (epRestore)
+        board[epRestore[0]][epRestore[1]] = {
+          type: "P",
+          color: turn === "w" ? "b" : "w",
+        };
       if (castlingRook) {
         board[castlingRook.from[0]][castlingRook.from[1]] = castlingRook.piece;
         board[castlingRook.to[0]][castlingRook.to[1]] = null;
@@ -256,7 +322,9 @@
       for (let c = 0; c < 8; c++) {
         const piece = getPiece(r, c);
         if (piece && piece.color === color) {
-          getLegalMoves(r, c).forEach(([toR, toC]) => moves.push({ from: [r, c], to: [toR, toC] }));
+          getLegalMoves(r, c).forEach(([toR, toC]) =>
+            moves.push({ from: [r, c], to: [toR, toC] }),
+          );
         }
       }
     return moves;
@@ -305,7 +373,15 @@
       }
     }
 
-    if (piece.type === "P" && lastMove && lastMove.piece === "P" && Math.abs(lastMove.fromC - lastMove.toC) === 1 && lastMove.toR === fromR && lastMove.fromR === fromR + (piece.color === "w" ? -2 : 2) && lastMove.toC === toC) {
+    if (
+      piece.type === "P" &&
+      lastMove &&
+      lastMove.piece === "P" &&
+      Math.abs(lastMove.fromC - lastMove.toC) === 1 &&
+      lastMove.toR === fromR &&
+      lastMove.fromR === fromR + (piece.color === "w" ? -2 : 2) &&
+      lastMove.toC === toC
+    ) {
       board[lastMove.toR][lastMove.toC] = null;
     }
 
@@ -415,7 +491,9 @@
   function render() {
     boardEl.innerHTML = "";
     const kingPos = getKingPos(turn);
-    const inCheckKing = kingPos && isSquareAttacked(kingPos[0], kingPos[1], turn === "w" ? "b" : "w");
+    const inCheckKing =
+      kingPos &&
+      isSquareAttacked(kingPos[0], kingPos[1], turn === "w" ? "b" : "w");
 
     for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
@@ -430,10 +508,17 @@
           sq.textContent = PIECES[piece.type][piece.color];
           sq.classList.add(piece.color === "w" ? "white" : "black");
         }
-        if (selected && selected[0] === r && selected[1] === c) sq.classList.add("highlight");
-        if (validMoves.some(([a, b]) => a === r && b === c)) sq.classList.add("move-target");
-        if (kingPos && r === kingPos[0] && c === kingPos[1] && inCheckKing) sq.classList.add("check");
-        if ((lastMoveFrom && r === lastMoveFrom[0] && c === lastMoveFrom[1]) || (lastMove && r === lastMove.toR && c === lastMove.toC)) sq.classList.add("last-move");
+        if (selected && selected[0] === r && selected[1] === c)
+          sq.classList.add("highlight");
+        if (validMoves.some(([a, b]) => a === r && b === c))
+          sq.classList.add("move-target");
+        if (kingPos && r === kingPos[0] && c === kingPos[1] && inCheckKing)
+          sq.classList.add("check");
+        if (
+          (lastMoveFrom && r === lastMoveFrom[0] && c === lastMoveFrom[1]) ||
+          (lastMove && r === lastMove.toR && c === lastMove.toC)
+        )
+          sq.classList.add("last-move");
         boardEl.appendChild(sq);
       }
     }
@@ -493,7 +578,8 @@
     }
     if (isCheck(turn)) {
       // just highlight king, label can say "Check"
-      turnLabel.textContent = (turn === "w" ? "White" : "Black") + " is in check!";
+      turnLabel.textContent =
+        (turn === "w" ? "White" : "Black") + " is in check!";
     }
 
     if (mode === "ai" && turn === "b") {
@@ -501,7 +587,8 @@
         const move = getBestMove(2);
         if (move) {
           const piece = board[move.from[0]][move.from[1]];
-          const isPromo = piece.type === "P" && (move.to[0] === 0 || move.to[0] === 7);
+          const isPromo =
+            piece.type === "P" && (move.to[0] === 0 || move.to[0] === 7);
           if (isPromo) {
             makeMove(move.from[0], move.from[1], move.to[0], move.to[1], "Q");
           } else {
@@ -568,8 +655,12 @@
     bindBoard();
   }
 
-  document.getElementById("vsFriendBtn").addEventListener("click", () => showGame("friend"));
-  document.getElementById("vsAiBtn").addEventListener("click", () => showGame("ai"));
+  document
+    .getElementById("vsFriendBtn")
+    .addEventListener("click", () => showGame("friend"));
+  document
+    .getElementById("vsAiBtn")
+    .addEventListener("click", () => showGame("ai"));
 
   document.getElementById("newGameBtn").addEventListener("click", () => {
     initBoard();
