@@ -297,7 +297,7 @@ function moveGhost(ghost, deltaSeconds) {
     const currentOppY = -ghost.dirY;
 
     const valid = dirs.filter(
-      (d) => !(d.x === currentOppX && d.y === currentOppY)
+      (d) => !(d.x === currentOppX && d.y === currentOppY),
     );
     const choice = valid[Math.floor(Math.random() * valid.length)];
     ghost.dirX = choice.x;
@@ -363,7 +363,7 @@ function drawMap() {
             y + corridorTile / 2,
             2,
             0,
-            Math.PI * 2
+            Math.PI * 2,
           );
           ctx.fill();
         } else if (val === 3) {
@@ -374,7 +374,7 @@ function drawMap() {
             y + corridorTile / 2,
             4,
             0,
-            Math.PI * 2
+            Math.PI * 2,
           );
           ctx.fill();
         }
@@ -392,12 +392,12 @@ function drawPacman() {
     pacman.dirX === 1
       ? 0
       : pacman.dirX === -1
-      ? Math.PI
-      : pacman.dirY === -1
-      ? -Math.PI / 2
-      : pacman.dirY === 1
-      ? Math.PI / 2
-      : 0;
+        ? Math.PI
+        : pacman.dirY === -1
+          ? -Math.PI / 2
+          : pacman.dirY === 1
+            ? Math.PI / 2
+            : 0;
 
   // Animate mouth open/close (chomp) like the original game
   const chompSpeed = 18;
@@ -411,7 +411,7 @@ function drawPacman() {
     py,
     corridorTile * 0.6,
     angleOffset + mouthOpen,
-    angleOffset + Math.PI * 2 - mouthOpen
+    angleOffset + Math.PI * 2 - mouthOpen,
   );
   ctx.closePath();
   ctx.fill();
@@ -419,8 +419,8 @@ function drawPacman() {
 
 function drawGhost(ghost) {
   // Draw centered on the ghost's tile so they don't appear half on wall
-  const gx = (Math.round(ghost.x) * corridorTile) + corridorTile / 2;
-  const gy = (Math.round(ghost.y) * corridorTile) + corridorTile / 2;
+  const gx = Math.round(ghost.x) * corridorTile + corridorTile / 2;
+  const gy = Math.round(ghost.y) * corridorTile + corridorTile / 2;
   const r = corridorTile * 0.6;
 
   ctx.fillStyle = ghost.color;
@@ -509,4 +509,3 @@ initMap();
 resetEntities();
 updateUI();
 requestAnimationFrame(loop);
-
